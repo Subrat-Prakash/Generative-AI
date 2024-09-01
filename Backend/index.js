@@ -11,9 +11,9 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors());
 
-// app.get('/', (req, res)=>{
-//     res.send('Hello World!');
-// })
+app.get('/', (req, res)=>{
+    res.send('Hello World!');
+})
 
 //const prompt = " Name 10 cricket player in india.";
 const generate = async (prompt) => {
@@ -54,7 +54,7 @@ app.get('/api/content', async (req, res) => {
 // });
 
 
-//generate();
-app.listen(3000,()=>{
-    console.log('Server is running on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, ()=>{
+  console.log('listening on port 3000');
 })
