@@ -4,10 +4,12 @@ import "./App.css";
 function App() {
   const [question, setQuestion] = useState('');
   const [result, setResult] = useState('');
+  const [loading, setLoading] = useState(false); // New loading state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    setLoading(true); // Set loading to true when API call starts
+
     const queryParams = new URLSearchParams({ question }).toString();
     const response = await fetch(`http://localhost:3000/api/content?${queryParams}`, {
       method: 'GET',
@@ -15,11 +17,11 @@ function App() {
         'Content-Type': 'application/json'
       },
     });
-  
+
     const data = await response.json();
     setResult(data.result);
+    setLoading(false); // Set loading to false once the response is received
   }
-  
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -55,7 +57,16 @@ function App() {
               Generate
             </button>
           </form>
-          {result && (
+
+          {/* Loading message */}
+          {loading && (
+            <div className="p-4 mt-4 bg-gray-50 rounded-md shadow-inner">
+              <p className="text-gray-600">Wait for response...</p>
+            </div>
+          )}
+
+          {/* Result display */}
+          {!loading && result && (
             <div className="p-4 mt-4 bg-gray-50 rounded-md shadow-inner">
               <h3 className="text-lg font-semibold text-gray-800">Result:</h3>
               <p className="mt-2 text-gray-700">{result}</p>
@@ -67,7 +78,7 @@ function App() {
       {/* Footer */}
       <footer className="bg-gray-200 py-4 mt-8">
         <div className="container mx-auto px-4 text-center">
-        Created by <strong>Subrat Prakash ❤️</strong>
+          Created by <strong>Subrat Prakash ❤️</strong>
         </div>
       </footer>
     </div>
