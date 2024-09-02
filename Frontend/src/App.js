@@ -11,7 +11,7 @@ function App() {
     setLoading(true); // Set loading to true when API call starts
 
     const queryParams = new URLSearchParams({ question }).toString();
-    const response = await fetch(`http://localhost:3000/api/content?${queryParams}`, {
+    const response = await fetch(`https://generative-ai-server.onrender.com/api/content?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
